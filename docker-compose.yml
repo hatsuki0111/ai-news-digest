@@ -1,0 +1,9 @@
+services:
+  digest:
+    build: .
+    env_file: .env
+    volumes:
+      - ./output:/app/output
+      - ./data:/app/data
+      - ./config.yaml:/app/config.yaml:ro
+    command: ["--hours", "24", "--config", "/app/config.yaml"]

@@ -1,0 +1,16 @@
+# Environment
+.env
+.venv/
+
+# Cache & Output
+cache.db
+data/
+output/
+
+# Config (contains Slack address)
+config.yaml
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/

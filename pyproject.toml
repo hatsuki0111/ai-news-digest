@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ai-news-digest"
+version = "0.1.0"
+description = "AIニュースを自動収集・要約・配信するツール"
+requires-python = ">=3.12"
+dependencies = [
+    "feedparser>=6.0",
+    "google-genai>=1.0",
+    "jinja2>=3.1",
+    "httpx>=0.27",
+    "pyyaml>=6.0",
+    "python-dateutil>=2.9",
+]
+
+[project.scripts]
+ai-news-digest = "ai_news_digest.main:main"
+
+[tool.setuptools.packages.find]
+include = ["ai_news_digest*"]
+
+[tool.setuptools.package-data]
+ai_news_digest = ["templates/*.html"]

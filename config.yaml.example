@@ -1,0 +1,145 @@
+# AI News Digest 設定ファイル
+
+# メール配信設定
+email:
+  smtp_host: "smtp.gmail.com"
+  smtp_port: 587
+  smtp_user: ""           # 環境変数 SMTP_USER で上書き可
+  smtp_password: ""       # 環境変数 SMTP_PASSWORD で上書き可
+  from_address: "your-email@example.com"
+  to_addresses:
+    - "your-slack-channel@your-workspace.slack.com"
+  subject_format: "AI News Digest - {date}"
+
+# RSSフィード設定
+feeds:
+  # === 英語メディア ===
+  - name: "OpenAI Blog"
+    url: "https://openai.com/blog/rss.xml"
+    language: en
+    enabled: true
+
+  - name: "Anthropic News"
+    url: "https://raw.githubusercontent.com/conoro/anthropic-engineering-rss-feed/main/anthropic_engineering_rss.xml"
+    language: en
+    enabled: true
+
+  - name: "Google AI Blog"
+    url: "https://blog.google/technology/ai/rss/"
+    language: en
+    enabled: true
+
+  - name: "DeepMind"
+    url: "https://deepmind.google/blog/rss.xml"
+    language: en
+    enabled: true
+
+  - name: "Meta AI"
+    url: "https://ai.meta.com/blog/rss/"
+    language: en
+    enabled: false  # 公式RSSフィードなし
+
+  - name: "MIT News - AI"
+    url: "https://news.mit.edu/rss/topic/artificial-intelligence2"
+    language: en
+    enabled: true
+
+  - name: "VentureBeat AI"
+    url: "https://venturebeat.com/category/ai/feed/"
+    language: en
+    enabled: true
+
+  - name: "The Verge - AI"
+    url: "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"
+    language: en
+    enabled: true
+
+  - name: "Ars Technica - AI"
+    url: "https://feeds.arstechnica.com/arstechnica/technology-lab"
+    language: en
+    enabled: true
+
+  - name: "Hugging Face Blog"
+    url: "https://huggingface.co/blog/feed.xml"
+    language: en
+    enabled: true
+
+  # === AI業界ニュース（英語） ===
+  - name: "TechCrunch - AI"
+    url: "https://techcrunch.com/category/artificial-intelligence/feed/"
+    language: en
+    enabled: true
+
+  - name: "The Information - AI"
+    url: "https://www.theinformation.com/feed"
+    language: en
+    enabled: false  # 有料メディア、RSSアクセス不可
+
+  - name: "NVIDIA Blog - AI"
+    url: "https://blogs.nvidia.com/feed/"
+    language: en
+    enabled: true
+
+  - name: "Microsoft AI Blog"
+    url: "https://blogs.microsoft.com/ai/feed/"
+    language: en
+    enabled: true
+
+  - name: "Amazon Science"
+    url: "https://www.amazon.science/index.rss"
+    language: en
+    enabled: true
+
+  # === 日本語メディア ===
+  - name: "ITmedia AI+"
+    url: "https://rss.itmedia.co.jp/rss/2.0/aiplus.xml"
+    language: ja
+    enabled: true
+
+  - name: "はてなブックマーク - 機械学習"
+    url: "https://b.hatena.ne.jp/hotentry/it.rss"
+    language: ja
+    enabled: true
+
+  # === 個人ブログ（無効化） ===
+  - name: "Zenn - AI"
+    url: "https://zenn.dev/topics/ai/feed"
+    language: ja
+    enabled: false
+
+  - name: "Zenn - LLM"
+    url: "https://zenn.dev/topics/llm/feed"
+    language: ja
+    enabled: false
+
+  - name: "Zenn - 機械学習"
+    url: "https://zenn.dev/topics/machinelearning/feed"
+    language: ja
+    enabled: false
+
+  - name: "Qiita - AI"
+    url: "https://qiita.com/tags/ai/feed"
+    language: ja
+    enabled: false
+
+  - name: "Qiita - 機械学習"
+    url: "https://qiita.com/tags/%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92/feed"
+    language: ja
+    enabled: false
+
+  - name: "Qiita - LLM"
+    url: "https://qiita.com/tags/llm/feed"
+    language: ja
+    enabled: false
+
+  # === X/Twitter (XRSS経由) ===
+  # XRSS Dockerセルフホスト導入後に有効化
+  # - name: "X - @OpenAI"
+  #   url: "http://localhost:3000/twitter/user/OpenAI"
+  #   language: en
+  #   enabled: false
+  #
+  # - name: "X - @AnthropicAI"
+  #   url: "http://localhost:3000/twitter/user/AnthropicAI"
+  #   language: en
+  #   enabled: false

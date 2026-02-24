@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI News Digest - {{ date }}</title>
+</head>
+<body style="margin:0;padding:0;background-color:#f0f2f5;font-family:'Helvetica Neue',Arial,'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;-webkit-font-smoothing:antialiased;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f0f2f5;">
+<tr><td align="center" style="padding:24px 12px;">
+<table role="presentation" width="640" cellpadding="0" cellspacing="0" style="background-color:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+
+<!-- ======== Header ======== -->
+<tr><td style="background:linear-gradient(135deg,#0f172a,#1e293b);padding:32px 40px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+  <tr><td>
+    <h1 style="margin:0;color:#ffffff;font-size:24px;font-weight:800;letter-spacing:0.5px;">AI News Digest</h1>
+    <p style="margin:6px 0 0;color:#94a3b8;font-size:13px;">{{ date }}</p>
+  </td>
+  <td align="right" valign="top">
+    <table role="presentation" cellpadding="0" cellspacing="0">
+    <tr>
+      <td style="background-color:rgba(255,255,255,0.1);border-radius:6px;padding:8px 14px;text-align:center;">
+        <p style="margin:0;color:#ffffff;font-size:20px;font-weight:700;line-height:1;">{{ new_articles }}</p>
+        <p style="margin:2px 0 0;color:#94a3b8;font-size:10px;letter-spacing:0.5px;">NEW</p>
+      </td>
+      <td width="8"></td>
+      <td style="background-color:rgba(255,255,255,0.1);border-radius:6px;padding:8px 14px;text-align:center;">
+        <p style="margin:0;color:#ffffff;font-size:20px;font-weight:700;line-height:1;">{{ total_articles }}</p>
+        <p style="margin:2px 0 0;color:#94a3b8;font-size:10px;letter-spacing:0.5px;">TOTAL</p>
+      </td>
+    </tr>
+    </table>
+  </td></tr>
+  </table>
+</td></tr>
+
+{% if top_stories %}
+<!-- ======== TOP 3 Hero Cards ======== -->
+<tr><td style="padding:28px 40px 0;">
+  <h2 style="margin:0 0 20px;font-size:13px;color:#64748b;text-transform:uppercase;letter-spacing:2px;font-weight:700;">Top Stories</h2>
+</td></tr>
+
+{% for s in top_stories[:3] %}
+<tr><td style="padding:0 40px {% if loop.last %}24px{% else %}0{% endif %};">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:{% if loop.last %}0{% else %}20{% endif %}px;background-color:#f8fafc;border-radius:10px;overflow:hidden;">
+  <!-- Importance Bar -->
+  <tr><td colspan="2" style="padding:0;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+      <td style="height:4px;width:{{ s.importance_score * 10 }}%;background:linear-gradient(90deg,{% if s.importance_score >= 9 %}#ef4444,#f97316{% elif s.importance_score >= 7 %}#f59e0b,#eab308{% else %}#3b82f6,#06b6d4{% endif %});"></td>
+      <td style="height:4px;background-color:#e2e8f0;"></td>
+    </tr></table>
+  </td></tr>
+  <tr><td style="padding:20px 24px;">
+    <!-- Rank + Meta -->
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
+    <tr>
+      <td width="32" valign="top">
+        <span style="display:inline-block;width:28px;height:28px;line-height:28px;text-align:center;background:linear-gradient(135deg,#0f172a,#334155);color:#ffffff;border-radius:8px;font-size:13px;font-weight:800;">{{ loop.index }}</span>
+      </td>
+      <td style="padding-left:10px;" valign="middle">
+        <span style="font-size:12px;color:#64748b;">{{ s.article.source }}</span>
+        <span style="font-size:12px;color:#cbd5e1;padding:0 6px;">|</span>
+        <span style="display:inline-block;background-color:#e2e8f0;color:#475569;font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;">{{ s.category }}</span>
+      </td>
+      <td align="right" valign="middle">
+        <span style="font-size:12px;font-weight:700;color:{% if s.importance_score >= 9 %}#ef4444{% elif s.importance_score >= 7 %}#f59e0b{% else %}#3b82f6{% endif %};">{{ s.importance_score }}<span style="color:#94a3b8;font-weight:400;">/10</span></span>
+      </td>
+    </tr>
+    </table>
+    <!-- Title -->
+    <p style="margin:0 0 4px;font-size:17px;font-weight:700;line-height:1.4;">
+      <a href="{{ s.article.url }}" style="color:#0f172a;text-decoration:none;">{{ s.article.title }}</a>
+    </p>
+    {% if s.title_ja %}
+    <p style="margin:0 0 10px;font-size:13px;color:#64748b;line-height:1.4;">{{ s.title_ja }}</p>
+    {% endif %}
+    <!-- Summary -->
+    <p style="margin:0;font-size:14px;color:#334155;line-height:1.7;">{{ s.summary }}</p>
+    <!-- Key Points -->
+    {% if s.key_points %}
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:12px;background-color:#ffffff;border-radius:6px;padding:2px 0;">
+    {% for point in s.key_points %}
+    <tr><td style="padding:4px 12px;font-size:13px;color:#475569;line-height:1.5;">
+      <span style="color:#94a3b8;margin-right:6px;">&#x25B8;</span>{{ point }}
+    </td></tr>
+    {% endfor %}
+    </table>
+    {% endif %}
+  </td></tr>
+  </table>
+</td></tr>
+{% endfor %}
+
+{% if top_stories|length > 3 %}
+<!-- ======== Divider ======== -->
+<tr><td style="padding:0 40px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+  <tr><td style="border-top:1px solid #e2e8f0;height:1px;font-size:0;line-height:0;">&nbsp;</td></tr>
+  </table>
+</td></tr>
+
+<!-- ======== Other Stories #4- (Compact) ======== -->
+<tr><td style="padding:24px 40px 8px;">
+  <h2 style="margin:0 0 16px;font-size:13px;color:#64748b;text-transform:uppercase;letter-spacing:2px;font-weight:700;">Also Noteworthy</h2>
+</td></tr>
+
+{% for s in top_stories[3:] %}
+<tr><td style="padding:0 40px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:{% if loop.last %}24px{% else %}12px{% endif %};border-bottom:{% if loop.last %}none{% else %}1px solid #f1f5f9{% endif %};padding-bottom:{% if loop.last %}0{% else %}12{% endif %}px;">
+  <tr>
+    <td width="28" valign="top">
+      <span style="display:inline-block;width:24px;height:24px;line-height:24px;text-align:center;background-color:#e2e8f0;color:#64748b;border-radius:6px;font-size:11px;font-weight:700;">{{ loop.index + 3 }}</span>
+    </td>
+    <td style="padding-left:12px;" valign="top">
+      <p style="margin:0 0 3px;font-size:14px;font-weight:600;line-height:1.4;">
+        <a href="{{ s.article.url }}" style="color:#0f172a;text-decoration:none;">{% if s.title_ja %}{{ s.title_ja }}{% else %}{{ s.article.title }}{% endif %}</a>
+      </p>
+      <p style="margin:0;font-size:12px;color:#94a3b8;">
+        {{ s.article.source }}
+        <span style="padding:0 4px;">&#xB7;</span>
+        <span style="display:inline-block;background-color:#f1f5f9;color:#64748b;font-size:10px;font-weight:600;padding:1px 6px;border-radius:3px;">{{ s.category }}</span>
+      </p>
+    </td>
+    <td width="44" align="right" valign="top">
+      <span style="display:inline-block;padding:3px 8px;border-radius:4px;font-size:12px;font-weight:700;background-color:{% if s.importance_score >= 9 %}#fef2f2{% elif s.importance_score >= 7 %}#fffbeb{% else %}#eff6ff{% endif %};color:{% if s.importance_score >= 9 %}#ef4444{% elif s.importance_score >= 7 %}#f59e0b{% else %}#3b82f6{% endif %};">{{ s.importance_score }}</span>
+    </td>
+  </tr>
+  </table>
+</td></tr>
+{% endfor %}
+{% endif %}
+{% endif %}
+
+<!-- ======== Footer ======== -->
+<tr><td style="background-color:#0f172a;padding:20px 40px;text-align:center;">
+  <p style="margin:0;font-size:11px;color:#64748b;">
+    AI News Digest &middot; Powered by Gemini API &middot; {{ date }}
+  </p>
+</td></tr>
+
+</table>
+</td></tr>
+</table>
+</body>
+</html>
