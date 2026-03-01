@@ -132,14 +132,9 @@ feeds:
     language: ja
     enabled: false
 
-  # === X/Twitter (XRSS経由) ===
-  # XRSS Dockerセルフホスト導入後に有効化
-  # - name: "X - @OpenAI"
-  #   url: "http://localhost:3000/twitter/user/OpenAI"
-  #   language: en
-  #   enabled: false
-  #
-  # - name: "X - @AnthropicAI"
-  #   url: "http://localhost:3000/twitter/user/AnthropicAI"
-  #   language: en
-  #   enabled: false
+  # === X/Twitter (Syndication API) ===
+  - name: "X - @claudeai"
+    url: "https://x.com/claudeai"
+    language: en
+    type: x
+    enabled: true
