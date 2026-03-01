@@ -2,7 +2,10 @@
 
 AIニュースを自動収集・要約・配信するCLIツール。
 
-22のRSSフィードからAI関連記事を収集し、Gemini APIで日本語要約・スコアリングしてTOP10を選定、HTML形式でメール/Slackに配信します。
+22のRSSフィードからAI関連記事を収集し、Gemini APIで日本語要約・スコアリングしてTOP10を選定、HTML形式でメール/Slackに日次配信します。
+
+![Python](https://img.shields.io/badge/Python-3.12+-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
 
 ## Features
 
@@ -12,6 +15,12 @@ AIニュースを自動収集・要約・配信するCLIツール。
 - **ポエムフィルタ**: 意見記事・エッセイを自動除外
 - **重複排除**: SQLiteキャッシュで要約結果を再利用
 - **HTMLダイジェスト**: TOP3ヒーローカード + コンパクトリストの3階層テンプレート
+
+## Requirements
+
+- Python 3.12+
+- [Google Gemini API Key](https://ai.google.dev/)
+- Gmail App Password（SMTP送信用）
 
 ## Quick Start
 

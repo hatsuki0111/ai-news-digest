@@ -39,6 +39,8 @@ SOURCE_PRIORITY: dict[str, str] = {
     "はてなブックマーク - 機械学習": "中〜高",
     # 日本語メディア
     "ITmedia AI+": "高",
+    # X/Twitter公式アカウント
+    "X - @claudeai": "高",
 }
 
 
