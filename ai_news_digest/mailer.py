@@ -21,8 +21,9 @@ def send_digest_email(
     smtp_port = email_config.get("smtp_port", 587)
     smtp_user = os.environ.get("SMTP_USER") or email_config.get("smtp_user", "")
     smtp_password = os.environ.get("SMTP_PASSWORD") or email_config.get("smtp_password", "")
-    from_address = email_config.get("from_address", smtp_user)
-    to_addresses = email_config.get("to_addresses", [])
+    from_address = os.environ.get("DIGEST_FROM_ADDRESS") or email_config.get("from_address", smtp_user)
+    to_addresses_env = os.environ.get("DIGEST_TO_ADDRESSES")
+    to_addresses = [a.strip() for a in to_addresses_env.split(",") if a.strip()] if to_addresses_env else email_config.get("to_addresses", [])
 
     if not to_addresses:
         logger.warning("送信先が設定されていません。メール送信をスキップします。")
