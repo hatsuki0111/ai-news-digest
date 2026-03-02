@@ -46,6 +46,8 @@ jobs:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          DIGEST_FROM_ADDRESS: ${{ secrets.DIGEST_FROM_ADDRESS }}
+          DIGEST_TO_ADDRESSES: ${{ secrets.DIGEST_TO_ADDRESSES }}
           DIGEST_OUTPUT_DIR: ${{ github.workspace }}/output
           DIGEST_DATA_DIR: ${{ github.workspace }}
           DIGEST_CONFIG: ${{ github.workspace }}/config.yaml
