@@ -1,0 +1,75 @@
+name: Run AI News Digest
+
+on:
+  schedule:
+    # 毎日 8:00 JST (23:00 UTC 前日) に実行
+    - cron: "0 23 * * *"
+  workflow_dispatch:
+    inputs:
+      hours:
+        description: "収集対象の時間範囲"
+        required: false
+        default: "24"
+        type: string
+      no_mail:
+        description: "メール送信をスキップ"
+        required: false
+        default: true
+        type: boolean
+      verbose:
+        description: "詳細ログ出力"
+        required: false
+        default: true
+        type: boolean
+
+jobs:
+  run-digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install .
+
+      - name: Copy config
+        run: cp config.yaml.example config.yaml
+
+      - name: Run AI News Digest
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          DIGEST_OUTPUT_DIR: ${{ github.workspace }}/output
+          DIGEST_DATA_DIR: ${{ github.workspace }}
+          DIGEST_CONFIG: ${{ github.workspace }}/config.yaml
+        run: |
+          # schedule トリガーでは inputs が空になるためデフォルト値を設定
+          HOURS="${{ inputs.hours }}"
+          HOURS="${HOURS:-24}"
+          NO_MAIL="${{ inputs.no_mail }}"
+          VERBOSE="${{ inputs.verbose }}"
+
+          ARGS="--hours $HOURS"
+          if [ "$NO_MAIL" = "true" ]; then
+            ARGS="$ARGS --no-mail"
+          fi
+          if [ "$VERBOSE" = "true" ]; then
+            ARGS="$ARGS --verbose"
+          fi
+          ai-news-digest $ARGS
+
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: digest-output-${{ github.run_id }}
+          path: output/
+          retention-days: 30
+          if-no-files-found: ignore
